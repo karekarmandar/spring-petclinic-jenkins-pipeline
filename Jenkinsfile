@@ -1,8 +1,8 @@
 pipeline {
   environment {
     registry = "tyitzhak/spring-petclinic-hub"
-    registryCredential = 'docker-hub'
-    dockerImage = ''
+//     registryCredential = 'docker-hub'
+//     dockerImage = ''
   }
   agent any
   tools {
@@ -35,20 +35,6 @@ pipeline {
         script {
           dockerImage = docker.build registry + ":latest"
         }
-      }
-    }
-    stage('Deploy Image') {
-      steps{
-         script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-    stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:latest"
       }
     }
   }
